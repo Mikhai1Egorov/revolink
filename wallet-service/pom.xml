@@ -12,58 +12,133 @@
     <artifactId>wallet-service</artifactId>
     <name>wallet-service</name>
 
+    <properties>
+        <java.version>21</java.version>
+        <jooq.version>3.20.3</jooq.version>
+        <postgres.version>42.6.2</postgres.version>
+        <springdoc.version>2.3.0</springdoc.version>
+        <flyway.version>9.22.3</flyway.version>
+        <lombok.version>1.18.30</lombok.version>
+        <spock.version>2.3-groovy-4.0</spock.version>
+        <groovy.version>4.0.26</groovy.version>
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+    </properties>
+
     <dependencies>
+        <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
         </dependency>
 
+        <!-- DB -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
 
+        <!-- Swagger / OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.3.0</version>
+            <version>${springdoc.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <version>2.3-groovy-4.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>4.0.26</version>
-        </dependency>
-
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Компилятор -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+
+            <!-- JOOQ Codegen -->
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-jooq</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgres.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <jdbc>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>jdbc:postgresql://localhost:5432/wallet_db</url>
+                        <user>postgres</user>
+                        <password>123123</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                            <inputSchema>public</inputSchema>
+                            <includes>wallet</includes>
+                        </database>
+                        <target>
+                            <packageName>dev.revolink.wallet.jooq</packageName>
+                            <directory>${project.basedir}/src/main/generated</directory>
+                        </target>
+                    </generator>
+                </configuration>
             </plugin>
         </plugins>
     </build>
