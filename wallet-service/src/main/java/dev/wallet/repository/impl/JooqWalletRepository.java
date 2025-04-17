@@ -7,6 +7,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,16 +32,17 @@ public class JooqWalletRepository implements WalletRepository {
 
     @Override
     public Wallet create(Wallet wallet) {
-        WalletRecord record = dsl.newRecord(WALLET);
-        record.setId(wallet.getId());
-        record.setCurrency(wallet.getCurrency());
-        record.setBalance(wallet.getBalance());
-        record.setCreatedAt(wallet.getCreatedAt() != null ? wallet.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime() : null);
-
-        record.store();
-
-        return mapToDomain(record);
+        dsl.insertInto(WALLET)
+                .set(WALLET.ID, wallet.getId())
+                .set(WALLET.CURRENCY, wallet.getCurrency())
+                .set(WALLET.BALANCE, wallet.getBalance())
+                .set(WALLET.CREATED_AT, wallet.getCreatedAt() != null
+                        ? wallet.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                        : null)
+                .execute();
+        return wallet;
     }
+
 
     @Override
     public void updateBalance(UUID id, BigDecimal newBalance) {
