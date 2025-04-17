@@ -25,4 +25,10 @@ public class Wallet {
         this.balance = balance;
         this.createdAt = createdAt;
     }
+
+    public Wallet(UUID id, String currency, BigDecimal balance) {
+        this.id = id;
+        this.currency = currency;
+        this.balance = balance;
+    }
 }
