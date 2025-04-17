@@ -13,9 +13,9 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @PostMapping("/api/transactions")
+    @PostMapping
     public ResponseEntity<String> createTransaction(@RequestBody TransactionRequest request) {
         transactionService.processTransaction(request);
-        return ResponseEntity.ok("Transaction event published");
+        return ResponseEntity.ok().build();
     }
 }
