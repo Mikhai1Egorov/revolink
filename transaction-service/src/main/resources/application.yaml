@@ -10,6 +10,13 @@ spring:
       host: localhost
       port: 6379
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+
 management:
   endpoints:
     web:
@@ -26,4 +33,6 @@ management:
 
 logging:
   level:
-    org.springframework.boot.actuate.endpoint.web: DEBUG
+    root: INFO
+    com.revolink: DEBUG
+    org.springframework.web: DEBUG
