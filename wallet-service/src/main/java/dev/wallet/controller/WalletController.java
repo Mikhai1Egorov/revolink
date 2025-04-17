@@ -24,7 +24,7 @@ public class WalletController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WalletResponseDto> getById(@PathVariable UUID id) {
+    public ResponseEntity<WalletResponseDto> getById(@PathVariable("id") UUID id) {
         return walletService.findById(id)
                 .map(walletMapper::toResponseDto)
                 .map(ResponseEntity::ok)
