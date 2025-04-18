@@ -2,6 +2,7 @@ package groovy.dev.wallet.service
 
 import dev.wallet.domain.Wallet
 import dev.wallet.dto.TransactionCompletedEvent
+import dev.wallet.metrics.WalletMetricsService
 import dev.wallet.repository.interf.WalletRepository
 import dev.wallet.service.impl.WalletServiceImpl
 import spock.lang.Specification
@@ -9,9 +10,9 @@ import spock.lang.Specification
 import java.time.Instant
 
 class WalletServiceImplSpec extends Specification {
-
     WalletRepository repository = Mock()
-    WalletServiceImpl service = new WalletServiceImpl(repository)
+    WalletMetricsService metrics = Mock()
+    WalletServiceImpl service = new WalletServiceImpl(repository, metrics)
 
     def "should create wallet"() {
         given:
@@ -45,7 +46,7 @@ class WalletServiceImplSpec extends Specification {
         result.get().id == id
     }
 
-    def "should update balance"() {
+    def "should update balance and increment metric"() {
         given:
         def id = UUID.randomUUID()
         def newBalance = new BigDecimal("200.00")
@@ -55,6 +56,7 @@ class WalletServiceImplSpec extends Specification {
 
         then:
         1 * repository.updateBalance(id, newBalance)
+        1 * metrics.incrementBalanceUpdate()
     }
 
     def "should delete wallet by id"() {
@@ -68,7 +70,7 @@ class WalletServiceImplSpec extends Specification {
         1 * repository.deleteById(id)
     }
 
-    def "should update balances on transaction.completed event"() {
+    def "should update balances and record metrics on transaction.completed event"() {
         given:
         def fromId = UUID.randomUUID()
         def toId = UUID.randomUUID()
@@ -83,10 +85,16 @@ class WalletServiceImplSpec extends Specification {
         def event = new TransactionCompletedEvent(fromId, toId, amount, "EUR")
 
         when:
+        Runnable runnable
+        1 * metrics.recordTransactionHandling(_ as Runnable) >> { Runnable r -> runnable = r }
+
         service.handleTransactionCompleted(event)
+
+        runnable.run()
 
         then:
         1 * repository.updateBalance(fromId, 150.00G)
         1 * repository.updateBalance(toId, 150.00G)
+        2 * metrics.incrementBalanceUpdate()
     }
 }

@@ -10,8 +10,8 @@ spring:
 
   flyway:
     enabled: true
-    locations: classpath:db/migration
     baseline-on-migrate: true
+    locations: classpath:db/migration
 
   data:
     redis:
@@ -22,4 +22,24 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: wallet-service/swagger-ui.html
+    path: /wallet-service/swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    enable:
+      all: true
+
+  newrelic:
+    metrics:
+      export:
+        enabled: true
+        api-key: ${NEW_RELIC_API_KEY}
+        account-id: ${NEW_RELIC_ACCOUNT_ID}
+        uri: https://metric-api.eu.newrelic.com/metric/v1

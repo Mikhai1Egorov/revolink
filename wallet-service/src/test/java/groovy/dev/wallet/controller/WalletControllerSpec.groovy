@@ -13,7 +13,6 @@ import spock.lang.Specification
 import java.time.Instant
 
 class WalletControllerSpec extends Specification {
-
     WalletService walletService = Mock()
     WalletMapper walletMapper = Mock()
     WalletController controller = new WalletController(walletService, walletMapper)

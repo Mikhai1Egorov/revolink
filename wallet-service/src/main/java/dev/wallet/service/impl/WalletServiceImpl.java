@@ -2,6 +2,7 @@ package dev.wallet.service.impl;
 
 import dev.wallet.domain.Wallet;
 import dev.wallet.dto.TransactionCompletedEvent;
+import dev.wallet.metrics.WalletMetricsService;
 import dev.wallet.repository.interf.WalletRepository;
 import dev.wallet.service.interf.WalletService;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,12 @@ import java.util.UUID;
 
 @Service
 public class WalletServiceImpl implements WalletService {
-
     private final WalletRepository repository;
+    private final WalletMetricsService metrics;
 
-    public WalletServiceImpl(WalletRepository repository) {
+    public WalletServiceImpl(WalletRepository repository, WalletMetricsService metrics) {
         this.repository = repository;
+        this.metrics = metrics;
     }
 
     @Override
@@ -38,6 +40,7 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void updateBalance(UUID id, BigDecimal newBalance) {
         repository.updateBalance(id, newBalance);
+        metrics.incrementBalanceUpdate();
     }
 
     @Override
@@ -47,12 +50,14 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void handleTransactionCompleted(TransactionCompletedEvent event) {
-        Wallet fromWallet = findById(event.fromWalletId())
-                .orElseThrow(() -> new IllegalArgumentException("From wallet not found"));
-        Wallet toWallet = findById(event.toWalletId())
-                .orElseThrow(() -> new IllegalArgumentException("To wallet not found"));
+        metrics.recordTransactionHandling(() -> {
+            Wallet fromWallet = findById(event.fromWalletId())
+                    .orElseThrow(() -> new IllegalArgumentException("From wallet not found"));
+            Wallet toWallet = findById(event.toWalletId())
+                    .orElseThrow(() -> new IllegalArgumentException("To wallet not found"));
 
-        updateBalance(fromWallet.getId(), fromWallet.getBalance().subtract(event.amount()));
-        updateBalance(toWallet.getId(), toWallet.getBalance().add(event.amount()));
+            updateBalance(fromWallet.getId(), fromWallet.getBalance().subtract(event.amount()));
+            updateBalance(toWallet.getId(), toWallet.getBalance().add(event.amount()));
+        });
     }
 }

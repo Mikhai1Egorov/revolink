@@ -14,4 +14,24 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: notification-service/swagger-ui.html
+    path: /notification-service/swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+  newrelic:
+    metrics:
+      export:
+        enabled: true
+        api-key: ${NEW_RELIC_API_KEY}
+        account-id: ${NEW_RELIC_ACCOUNT_ID}
+        uri: https://metric-api.eu.newrelic.com/metric/v1

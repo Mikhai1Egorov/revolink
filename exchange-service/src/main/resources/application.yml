@@ -1,9 +1,16 @@
-logging:
-  level:
-    com.revolink.exchange: DEBUG
+server:
+  port: 8083
+
+spring:
+  application:
+    name: exchange-service
 
 springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: exchange-service/swagger-ui.html
+    path: /exchange-service/swagger-ui.html
+
+logging:
+  level:
+    com.revolink.exchange: DEBUG

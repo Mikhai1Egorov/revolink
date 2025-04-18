@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 
 class WalletClientImplTest extends Specification {
-
     RestTemplate restTemplate = Mock(RestTemplate)
     WalletClient client = new WalletClientImpl(restTemplate)
 
