@@ -17,3 +17,9 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: wallet-service/swagger-ui.html

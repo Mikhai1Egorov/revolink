@@ -1,3 +1,9 @@
 logging:
   level:
     com.revolink.exchange: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: exchange-service/swagger-ui.html

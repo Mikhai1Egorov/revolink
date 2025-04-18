@@ -10,7 +10,7 @@ import static spark.Spark.*;
 public class ExchangeServiceApplication {
 
     public static void main(String[] args) {
-        port(8080);
+        port(8083);
 
         ExchangeRatesConfig exchangeRatesConfig = new ExchangeRatesConfig();
         ExchangeService exchangeService = new ExchangeServiceImpl(exchangeRatesConfig);
@@ -18,6 +18,6 @@ public class ExchangeServiceApplication {
 
         exchangeController.init();
 
-        System.out.println("Exchange Service is running on port 8080");
+        System.out.println("Exchange Service is running on port 8083");
     }
 }
