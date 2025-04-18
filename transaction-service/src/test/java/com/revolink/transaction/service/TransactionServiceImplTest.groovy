@@ -9,7 +9,6 @@ import com.revolink.transaction.service.interf.TransactionService
 import spock.lang.Specification
 
 class TransactionServiceImplTest extends Specification {
-
     TransactionEventPublisher publisher = Mock()
     TransactionMetricsService metricsService = Mock()
     TransactionService service = new TransactionServiceImpl(publisher, metricsService)

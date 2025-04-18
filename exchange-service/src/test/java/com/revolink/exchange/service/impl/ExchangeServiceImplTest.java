@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExchangeServiceImplTest {
-
     private ExchangeService exchangeService;
 
     @BeforeEach

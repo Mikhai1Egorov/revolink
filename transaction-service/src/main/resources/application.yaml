@@ -20,15 +20,21 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
-
+        include: health, info, metrics, prometheus
   endpoint:
     prometheus:
       enabled: true
-
   metrics:
     tags:
       application: ${spring.application.name}
+
+  newrelic:
+    metrics:
+      export:
+        enabled: true
+        api-key: ${NEW_RELIC_API_KEY}
+        account-id: ${NEW_RELIC_ACCOUNT_ID}
+        uri: https://metric-api.eu.newrelic.com/metric/v1
 
 logging:
   level:

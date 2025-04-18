@@ -14,7 +14,6 @@ import static dev.revolink.wallet.jooq.tables.Wallet.WALLET;
 
 @Repository
 public class JooqWalletRepository implements WalletRepository {
-
     private final DSLContext dsl;
 
     public JooqWalletRepository(DSLContext dsl) {
@@ -35,7 +34,8 @@ public class JooqWalletRepository implements WalletRepository {
         record.setId(wallet.getId());
         record.setCurrency(wallet.getCurrency());
         record.setBalance(wallet.getBalance());
-        record.setCreatedAt(wallet.getCreatedAt() != null ? wallet.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime() : null);
+        record.setCreatedAt(wallet.getCreatedAt() != null ?
+                wallet.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime() : null);
 
         record.store();
 
@@ -62,7 +62,8 @@ public class JooqWalletRepository implements WalletRepository {
         wallet.setId(record.getId());
         wallet.setCurrency(record.getCurrency());
         wallet.setBalance(record.getBalance());
-        wallet.setCreatedAt(record.getCreatedAt() != null ? record.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toInstant() : null);
+        wallet.setCreatedAt(record.getCreatedAt() != null ?
+                record.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toInstant() : null);
         return wallet;
     }
 }

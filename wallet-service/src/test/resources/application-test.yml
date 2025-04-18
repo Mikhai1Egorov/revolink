@@ -16,7 +16,6 @@ spring:
     swagger-ui:
       path: /swagger-ui.html
 
-
 logging:
   level:
     org.jooq: DEBUG

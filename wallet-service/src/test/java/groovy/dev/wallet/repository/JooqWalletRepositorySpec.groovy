@@ -11,7 +11,6 @@ import spock.lang.Specification
 import java.time.Instant
 
 class JooqWalletRepositorySpec extends Specification {
-
     DSLContext dsl
     JooqWalletRepository repository
 

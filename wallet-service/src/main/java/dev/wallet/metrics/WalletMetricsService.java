@@ -10,9 +10,7 @@ import java.time.Duration;
 
 @Service
 public class WalletMetricsService {
-
     private final MeterRegistry registry;
-
     private Counter balanceUpdatedCounter;
     private Timer transactionHandleTimer;
 

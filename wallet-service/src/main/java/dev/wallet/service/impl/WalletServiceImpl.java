@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @Service
 public class WalletServiceImpl implements WalletService {
-
     private final WalletRepository repository;
     private final WalletMetricsService metrics;
 

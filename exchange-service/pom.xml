@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.revolink</groupId>
     <artifactId>exchange-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <name>exchange-service</name>
 
     <properties>
@@ -18,41 +18,43 @@
         <lombok.version>1.18.30</lombok.version>
         <spock.version>2.3-groovy-4.0</spock.version>
         <groovy.version>4.0.26</groovy.version>
+        <junit.version>5.10.0</junit.version>
+        <mockito.version>4.5.1</mockito.version>
+        <restassured.version>5.4.0</restassured.version>
+        <slf4j.version>2.0.0-alpha1</slf4j.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-        <micrometer.version>1.12.2</micrometer.version>
-        <spring.boot.actuator.version>3.2.5</spring.boot.actuator.version>
     </properties>
 
     <dependencies>
 
-        <!-- === Core Framework === -->
+        <!-- Core Framework -->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>${sparkjava.version}</version>
         </dependency>
 
-        <!-- === JSON Processing === -->
+        <!-- JSON Processing -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- === Logging === -->
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.0-alpha1</version>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.0-alpha1</version>
+            <version>${slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- === Boilerplate Reducer === -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -60,29 +62,29 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- === Testing === -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.0</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
+            <version>${restassured.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.5.1</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -90,16 +92,17 @@
 
     <build>
         <plugins>
-            <!-- Compiler plugin -->
+
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

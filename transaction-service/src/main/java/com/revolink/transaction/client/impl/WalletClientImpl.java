@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Component
 public class WalletClientImpl implements WalletClient {
-
     private final RestTemplate restTemplate;
     private static final String WALLET_SERVICE_URL = "http://localhost:8081/api/wallets";
 

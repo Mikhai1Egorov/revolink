@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 @Component
 @RequiredArgsConstructor
 public class TransactionCompletedListener implements MessageListener {
-
     private final ObjectMapper objectMapper;
     private final WalletService walletService;
     private final RedisMessageListenerContainer container;

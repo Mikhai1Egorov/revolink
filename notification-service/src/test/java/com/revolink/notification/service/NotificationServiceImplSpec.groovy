@@ -6,7 +6,6 @@ import com.revolink.notification.service.impl.NotificationServiceImpl
 import spock.lang.Specification
 
 class NotificationServiceImplSpec extends Specification {
-
     def metricsService = Mock(NotificationMetricsService)
     def service = new NotificationServiceImpl(metricsService)
 

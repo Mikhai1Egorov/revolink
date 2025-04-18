@@ -10,7 +10,6 @@ import spock.lang.Specification
 import java.time.Instant
 
 class WalletServiceImplSpec extends Specification {
-
     WalletRepository repository = Mock()
     WalletMetricsService metrics = Mock()
     WalletServiceImpl service = new WalletServiceImpl(repository, metrics)
@@ -89,10 +88,8 @@ class WalletServiceImplSpec extends Specification {
         Runnable runnable
         1 * metrics.recordTransactionHandling(_ as Runnable) >> { Runnable r -> runnable = r }
 
-        // вызвать handle
         service.handleTransactionCompleted(event)
 
-        // выполнить Runnable вручную, чтобы зашли внутрь updateBalance
         runnable.run()
 
         then:
@@ -100,5 +97,4 @@ class WalletServiceImplSpec extends Specification {
         1 * repository.updateBalance(toId, 150.00G)
         2 * metrics.incrementBalanceUpdate()
     }
-
 }

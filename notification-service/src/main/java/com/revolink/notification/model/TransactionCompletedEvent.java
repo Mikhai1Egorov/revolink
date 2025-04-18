@@ -1,6 +1,7 @@
 package com.revolink.notification.model;
 
 import lombok.Data;
+
 import java.util.UUID;
 
 @Data

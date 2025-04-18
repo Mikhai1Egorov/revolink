@@ -10,7 +10,6 @@ import java.time.Duration;
 
 @Service
 public class NotificationMetricsService {
-
     private final MeterRegistry registry;
     private Counter receivedCounter;
     private Counter failedCounter;
@@ -43,11 +42,9 @@ public class NotificationMetricsService {
     public void incrementReceived() {
         receivedCounter.increment();
     }
-
     public void incrementFailed() {
         failedCounter.increment();
     }
-
     public void record(Runnable runnable) {
         processingTimer.record(runnable);
     }
