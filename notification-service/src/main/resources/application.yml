@@ -15,3 +15,15 @@ springdoc:
     enabled: true
   swagger-ui:
     path: notification-service/swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}

@@ -89,6 +89,14 @@
             <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.14.12</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

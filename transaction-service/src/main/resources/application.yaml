@@ -14,22 +14,21 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: transaction-service/swagger-ui.html
-
+    path: /transaction-service/swagger-ui.html
 
 management:
   endpoints:
     web:
       exposure:
-        include: "health,info,metrics,prometheus"
-
-  metrics:
-    tags:
-      application: ${spring.application.name}
+        include: health,info,metrics,prometheus
 
   endpoint:
     prometheus:
       enabled: true
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 logging:
   level:
