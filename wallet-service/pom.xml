@@ -22,6 +22,7 @@
         <spock.version>2.3-groovy-4.0</spock.version>
         <groovy.version>4.0.26</groovy.version>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <micrometer.version>1.11.3</micrometer.version>
     </properties>
 
     <dependencies>
@@ -40,13 +41,26 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- Monitoring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
+
+        <!-- JOOQ -->
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>${jooq.version}</version>
         </dependency>
 
-        <!-- DB -->
+        <!-- Database -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -70,7 +84,7 @@
             <version>${springdoc.version}</version>
         </dependency>
 
-        <!-- Redis Listener -->
+        <!-- Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -106,7 +120,7 @@
 
     <build>
         <plugins>
-            <!-- Компилятор -->
+            <!-- Maven Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

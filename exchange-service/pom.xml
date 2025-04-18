@@ -19,30 +19,32 @@
         <spock.version>2.3-groovy-4.0</spock.version>
         <groovy.version>4.0.26</groovy.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+        <micrometer.version>1.12.2</micrometer.version>
+        <spring.boot.actuator.version>3.2.5</spring.boot.actuator.version>
     </properties>
 
     <dependencies>
-        <!-- SparkJava framework -->
+
+        <!-- === Core Framework === -->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>${sparkjava.version}</version>
         </dependency>
 
-        <!-- Jackson for JSON processing -->
+        <!-- === JSON Processing === -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- SLF4J for logging -->
+        <!-- === Logging === -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.0-alpha1</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -50,7 +52,32 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JUnit for running Spock tests -->
+        <!-- === Monitoring (Micrometer + Actuator) === -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+            <version>${spring.boot.actuator.version}</version>
+        </dependency>
+
+        <!-- === Boilerplate Reducer === -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- === Testing === -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -63,23 +90,12 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Lombok for generating boilerplate code -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Mockito for mocking objects -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -87,17 +103,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Swagger / OpenAPI -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.3.0</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin to specify Java version -->
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,4 +119,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
