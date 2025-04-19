@@ -1,0 +1,64 @@
+services:
+  wallet-service:
+    build:
+      context: ./wallet-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+
+  transaction-service:
+    build:
+      context: ./transaction-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - redis
+
+  notification-service:
+    build:
+      context: ./notification-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - redis
+
+  exchange-service:
+    build:
+      context: ./exchange-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123123
+    ports:
+      - "5432:5432"
+
+volumes:
+  grafana-storage:

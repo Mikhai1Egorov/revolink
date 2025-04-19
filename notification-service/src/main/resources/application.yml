@@ -1,20 +1,17 @@
 server:
   port: 8082
+  servlet:
+    context-path: /notification-service
 
 spring:
   application:
     name: notification-service
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
 springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: /notification-service/swagger-ui.html
+    path: /swagger-ui.html
 
 management:
   endpoints:
@@ -24,14 +21,11 @@ management:
   endpoint:
     health:
       show-details: always
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
   newrelic:
     metrics:
       export:
         enabled: true
-        api-key: ${NEW_RELIC_API_KEY}
-        account-id: ${NEW_RELIC_ACCOUNT_ID}
-        uri: https://metric-api.eu.newrelic.com/metric/v1
+        accountId: 6619351
+        apiKey: eu01xx7a671e99c058932413fd4964e3FFFFNRAL
+        uri: https://metric-api.eu.newrelic.com
+        step: 30s

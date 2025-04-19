@@ -1,5 +1,7 @@
 server:
   port: 8083
+  servlet:
+    context-path: /exchange-service
 
 spring:
   application:
@@ -9,8 +11,8 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    path: /exchange-service/swagger-ui.html
+    path: /swagger-ui.html
 
 logging:
   level:
-    com.revolink.exchange: DEBUG
+    com.revolink.exchange: WARN
